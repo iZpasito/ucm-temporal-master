@@ -43,16 +43,14 @@ function App() {
         }
     }
 
-    const minute = 1000 * 60;
     refreshTokens();
-    setInterval(refreshTokens, minute * 1);
 }, []);
 
 function changeLoggedIn(value) {
     setLoggedIn(value);
     
     if (value === false) {
-        localStorage.clear();
+        sessionStorage.clear();
     }
 
 }
@@ -65,7 +63,7 @@ function changeLoggedIn(value) {
             {getUser() === "USUARIO" && (
                 <>
                 <Route path="/user/mis-reservas" element={<Agendar />} />
-                <Route path="/user/agendar" element={<Agendar />} />
+                <Route path="/user/agendar" element={<Agendar/>} />
                 </>
             )}
             {getUser() === "ADMIN" && (
@@ -77,7 +75,7 @@ function changeLoggedIn(value) {
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Login />} />
               <Route path="/404" element={<PageError  />} />
-              <Route path="*" element={<PageError />} />
+              <Route path="/*" element={<PageError />} />
           </Routes>
   </BrowserRouter>
 </LoginContext.Provider>

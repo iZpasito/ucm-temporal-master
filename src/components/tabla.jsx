@@ -15,28 +15,10 @@ export default function Tabla() {
   //const [options, setOptions] = useState([]);
   const [CampoTexto, setCampoTexto] = useState(' ');
 
-  function login(e) {
-    e.preventDefault();
-    const url = 'https://api-v3-espaciosucm.onrender.com/api/v3//';
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          nombre:RNombre,
-          email:RCorreo,
-          eleccion:Eleccion,
-          horaInicio:HoraInicio,
-          horaFin:HoraFin,
-          fecha:selectedDate,
-          texto:CampoTexto
-        }),
-    })
-        .then((response) => {
-            return response.json();
-        })
+  function getAccess(){
+    return sessionStorage.getItem('access');
 }
+
 
   return (
     <div className="relative flex flex-col justify-center items-center bg-gradient-to-r from-blue-500 via-teal-300 to-blue-300">
