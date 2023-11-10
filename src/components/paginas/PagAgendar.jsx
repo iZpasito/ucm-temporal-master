@@ -1,5 +1,5 @@
 import Tabla from "../tabla"
-import Naver from "./nav.jsx"
+import Naver from "./nav"
 
 
 function Agendar() {
