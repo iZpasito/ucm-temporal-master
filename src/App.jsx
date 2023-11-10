@@ -62,7 +62,7 @@ function changeLoggedIn(value) {
           <Routes>
             {getUser() === "USUARIO" && (
                 <>
-                <Route path="/user/mis-reservas" element={<Agendar />} />
+                <Route path="/user/mis-reservas" element={<Agendar/>} />
                 <Route path="/user/agendar" element={<Agendar/>} />
                 </>
             )}

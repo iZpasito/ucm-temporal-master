@@ -1,4 +1,4 @@
-import React, {useContext, useState } from "react";
+import React, {useEffect, useState } from "react";
 import campus1 from '../assets/campus.png'
 
 //import AuthContext from "./context/authContext";
@@ -14,11 +14,28 @@ export default function Tabla() {
   const [selectedDate, setSelectedDate] = useState(null);
   //const [options, setOptions] = useState([]);
   const [CampoTexto, setCampoTexto] = useState(' ');
+  const [Cancha, setCancha] = useState('');
 
   function getAccess(){
     return sessionStorage.getItem('access');
 }
+useEffect(()=>{
+  fetchData();
+}, []);
 
+async function fetchData(){
+  const url = 'https://api-v3-espaciosucm.onrender.com/api/v3/espaciosdeportivos/';
+  fetch(url, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+ sessionStorage.getItem('access')
+      },
+  })
+  .then(response => response.json())
+  .then(json => setCancha(json))
+  
+}
 
   return (
     <div className="relative flex flex-col justify-center items-center bg-gradient-to-r from-blue-500 via-teal-300 to-blue-300">
@@ -58,7 +75,12 @@ export default function Tabla() {
               value={Eleccion}
               onChange={(e) => setEleccion(e.target.value)}
             >
-            </select>
+              {Cancha.length > 0 && Cancha.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.nombre_espacio}
+                </option>
+              ))}
+          </select>
           </div>
           <div className="my-4">
             <label className="block text-gray-800 text-xl font-bold mb-2">Espacios deportivos:</label>
