@@ -1,5 +1,5 @@
 import { useContext, useState} from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../App';
 
 export default function Login() {
@@ -7,7 +7,7 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const location = useLocation();
+  //const location = useLocation();
   const navigate = useNavigate();
 
   
@@ -41,7 +41,7 @@ export default function Login() {
               var payloadObject = JSON.parse(decodedPayload);
 
               // Muestra la información en la consola
-              console.log(payloadObject);
+              //console.log(payloadObject);
               sessionStorage.setItem('rol', payloadObject.rol);
               setLoggedIn(true);
 

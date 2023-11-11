@@ -35,7 +35,7 @@ function App() {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log('xd',data.access)
+                    //console.log('xd',data.access)
                     sessionStorage.access = data.access;
                     sessionStorage.refresh = data.refresh;
                     setLoggedIn(true);

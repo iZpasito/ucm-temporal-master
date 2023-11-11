@@ -1,26 +1,29 @@
 import React, {useEffect, useState } from "react";
 import campus1 from '../assets/campus.png'
+import { jwtDecode } from "jwt-decode";
 
 //import AuthContext from "./context/authContext";
 
 
 
 export default function Tabla() {
-  const [RNombre, setNombre] = useState(' ');
-  const [RCorreo, setCorreo] = useState(' ');
-  const [Eleccion, setEleccion] = useState(' ');
-  const [HoraInicio, setHoraInicio] = useState(' ');
-  const [HoraFin, setHoraFin] = useState(' ');
+  const [RNombre, setNombre] = useState('');
+  const [RCorreo, setCorreo] = useState('');
+  const [Eleccion, setEleccion] = useState('');
+  const [HoraInicio, setHoraInicio] = useState('');
+  const [HoraFin, setHoraFin] = useState('');
   const [selectedDate, setSelectedDate] = useState(null);
   //const [options, setOptions] = useState([]);
-  const [CampoTexto, setCampoTexto] = useState(' ');
+  const [CampoTexto, setCampoTexto] = useState('');
   const [Cancha, setCancha] = useState('');
+  const [rescuedCorreo, setRescuedCorreo] = useState("");
+  const [rescuedNombre, setRescuedNombre] = useState("");
 
-  function getAccess(){
-    return sessionStorage.getItem('access');
-}
+
+
 useEffect(()=>{
   fetchData();
+  Datos_Rellenar();
 }, []);
 
 async function fetchData(){
@@ -36,7 +39,13 @@ async function fetchData(){
   .then(json => setCancha(json))
   
 }
-
+async function Datos_Rellenar(){
+  const datos = jwtDecode(sessionStorage.access ?? "");
+  const v_correo = datos?.email;
+  const v_nombre = datos?.nombre + ' ' + datos?.apellido1
+  setRescuedCorreo(v_correo);
+  setRescuedNombre(v_nombre);
+}
   return (
     <div className="relative flex flex-col justify-center items-center bg-gradient-to-r from-blue-500 via-teal-300 to-blue-300">
       <form 
@@ -47,21 +56,23 @@ async function fetchData(){
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:w-2/5 mb-3 md:pr-3">
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 placeholder="Nombre"
-                value={RNombre}
+                value={rescuedNombre}
                 onChange={(ev) => setNombre(ev.target.value)}
+                disabled={true}
               />
             </div>
             <div className="w-full md:w-3/5">
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-white-200 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="email"
                 placeholder="Correo"
-                value={RCorreo}
+                value={rescuedCorreo}
                 onChange={(ev) => setCorreo(ev.target.value)}
-                pattern="^[a-zA-Z0-9._%+-]+@(alu.ucm\.cl|ucm\.cl)$"
+                //pattern="^[a-zA-Z0-9._%+-]+@(alu.ucm\.cl|ucm\.cl)$"
+                disabled={true}
               />
             </div>
           </div>
