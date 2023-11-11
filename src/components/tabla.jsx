@@ -41,10 +41,8 @@ async function fetchData(){
 }
 async function Datos_Rellenar(){
   const datos = jwtDecode(sessionStorage.access ?? "");
-  const v_correo = datos?.email;
-  const v_nombre = datos?.nombre + ' ' + datos?.apellido1
-  setRescuedCorreo(v_correo);
-  setRescuedNombre(v_nombre);
+  setRescuedCorreo(datos?.email);
+  setRescuedNombre(datos?.nombre + ' ' + datos?.apellido1);
 }
   return (
     <div className="relative flex flex-col justify-center items-center bg-gradient-to-r from-blue-500 via-teal-300 to-blue-300">

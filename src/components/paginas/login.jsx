@@ -9,9 +9,7 @@ export default function Login() {
 
   //const location = useLocation();
   const navigate = useNavigate();
-
   
-
   function login(e) {
       e.preventDefault();
       const url = 'https://api-v3-espaciosucm.onrender.com/api/v3/login/';
@@ -33,10 +31,8 @@ export default function Login() {
               sessionStorage.setItem('refresh', data.refresh);
               // Divide el token en sus partes: header, payload y signature
               var parts = (data.access).split('.');
-
               // Decodifica la parte de payload, que generalmente contiene la información útil
               var decodedPayload = atob(parts[1]);
-
               // Convierte la cadena decodificada en un objeto JSON
               var payloadObject = JSON.parse(decodedPayload);
 
