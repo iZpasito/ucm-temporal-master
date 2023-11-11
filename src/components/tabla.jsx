@@ -59,7 +59,7 @@ async function Datos_Rellenar(){
                 className="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 placeholder="Nombre"
-                value={rescuedNombre}
+                value={rescuedNombre || ""}
                 onChange={(ev) => setNombre(ev.target.value)}
                 disabled={true}
               />
@@ -69,7 +69,7 @@ async function Datos_Rellenar(){
                 className="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="email"
                 placeholder="Correo"
-                value={rescuedCorreo}
+                value={rescuedCorreo || ""}
                 onChange={(ev) => setCorreo(ev.target.value)}
                 //pattern="^[a-zA-Z0-9._%+-]+@(alu.ucm\.cl|ucm\.cl)$"
                 disabled={true}
@@ -78,9 +78,9 @@ async function Datos_Rellenar(){
           </div>
           <br />
           <div>
-            <label className="block text-gray-800 text-xl font-bold mb-4">Cancha</label>
+            <label className="block text-gray-220 text-xl font-bold mb-4">Cancha</label>
             <select
-              className="py-2 px-2 pr-8 block w-full border rounded w-full text-xl focus:outline-none focus:shadow-outline dark:bg-slate-300 dark:text-gray-400"
+              className="py-2 px-2 pr-8 block w-full border rounded w-full text-xl focus:outline-none focus:shadow-outline dark:bg-slate-100 dark:text-black-400"
               label="Seleccione"
               name="eleccion"
               value={Eleccion}
@@ -134,7 +134,7 @@ async function Datos_Rellenar(){
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:w-1/2 mb-3 md:pr-3">
               <select
-                className="py-2 px-2 pr-8 block w-full border rounded w-full text-xl focus:outline-none focus:shadow-outline dark:bg-slate-300 dark:text-gray-400"
+                className="py-2 px-2 pr-8 block w-full border rounded w-full text-xl focus:outline-none focus:shadow-outline dark:bg-slate-100 dark:text-black-400"
                 value={HoraInicio}
                 name="horainicio"
                 onChange={(e) => setHoraInicio(e.target.value)}
@@ -152,7 +152,7 @@ async function Datos_Rellenar(){
             </div>
             <div className="w-full md:w-1/2">
               <select
-                className="py-2 px-2 pr-8 block w-full border rounded w-full text-xl focus:outline-none focus:shadow-outline dark:bg-slate-300 dark:text-gray-400"
+                className="py-2 px-2 pr-8 block w-full border rounded w-full text-xl focus:outline-none focus:shadow-outline dark:bg-slate-100 dark:text-black-400"
                 value={HoraFin}
                 name="horafin"
                 onChange={(e) => setHoraFin(e.target.value)}
