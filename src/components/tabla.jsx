@@ -1,7 +1,6 @@
 import React, {useEffect, useState } from "react";
 import campus1 from '../assets/campus.png'
 import { jwtDecode } from "jwt-decode";
-import moment from "moment/moment";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -151,12 +150,11 @@ console.log(Horas)
           </div>
           <div className="my-4">
             <label className="block text-gray-800 text-xl font-bold mb-2">Seleccione una fecha:</label>
-            <input
-              type="date"
-              value={selectedDate}
-              name="date"
-              onChange={(date) => setSelectedDate(date)};
-              min={new Date().toISOString().split("T")[0]}
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              minDate={new Date()}
+              dateFormat="yyyy-MM-dd"
             />
           </div>
           <div className="flex flex-col md:flex-row">
