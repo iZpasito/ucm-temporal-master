@@ -1,4 +1,4 @@
-import Tabla from "../tabla"
+import TablaAdm from "../tabla-adm"
 import Navad from "./nav-adm"
 
 function AdmAgendar() {
@@ -6,7 +6,7 @@ function AdmAgendar() {
   return (
     <div className='h-screen min-w-375'>
       <Navad></Navad>
-      <Tabla/>
+      <TablaAdm></TablaAdm>
     </div>
   )
 }

@@ -1,38 +1,29 @@
 import React, {useEffect, useState } from "react";
 import campus1 from '../assets/campus.png'
 import { jwtDecode } from "jwt-decode";
-import moment from "moment/moment";
 
 //import AuthContext from "./context/authContext";
 
 
 
-export default function Tabla() {
+export default function TablaAdm() {
   const [RNombre, setNombre] = useState('');
   const [RCorreo, setCorreo] = useState('');
-  const [Eleccion, setEleccion] = useState('1');
+  const [Eleccion, setEleccion] = useState('');
   const [HoraInicio, setHoraInicio] = useState('');
-  const [Horas, setHoras] = useState([])
   //const [HoraFin, setHoraFin] = useState('');
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
   //const [options, setOptions] = useState([]);
   const [CampoTexto, setCampoTexto] = useState('');
   const [Cancha, setCancha] = useState('');
-  const [rescuedCorreo, setRescuedCorreo] = useState("");
-  const [rescuedNombre, setRescuedNombre] = useState("");
+  //const [rescuedCorreo, setRescuedCorreo] = useState("");
+  //const [rescuedNombre, setRescuedNombre] = useState("");
+
 
 
 useEffect(()=>{
   fetchData();
-  Datos_Rellenar();
-  if (Eleccion) {
-    fetchHoras(Eleccion);
-  } else {
-    fetchHoras('1'); // Inicializa las horas con la cancha con ID 1
-  }
 }, []);
-
-let hasFetchedHours = false;
 
 async function fetchData(){
   const url = 'https://api-v3-espaciosucm.onrender.com/api/v3/espaciosdeportivos/';
@@ -45,30 +36,9 @@ async function fetchData(){
   })
   .then(response => response.json())
   .then(json => setCancha(json))
+  
 }
 
-async function fetchHoras(CanchaID) {
-  if (!hasFetchedHours) {
-    hasFetchedHours = true;
-    const url = `https://api-v3-espaciosucm.onrender.com/api/v3/horarios-disponibles/${CanchaID}/`;
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + sessionStorage.getItem("access"),
-      },
-    })
-      .then((response) => response.json())
-      .then((json) => setHoras(json));
-  }
-}
-async function Datos_Rellenar(){
-  const datos = jwtDecode(sessionStorage.access ?? "");
-  setRescuedCorreo(datos?.email);
-  setRescuedNombre(datos?.nombre + ' ' + datos?.apellido1);
-}
-
-console.log(Horas)
   return (
     <div className="relative flex flex-col justify-center items-center bg-gradient-to-r from-blue-500 via-teal-300 to-blue-300">
       <form 
@@ -82,9 +52,8 @@ console.log(Horas)
                 className="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 placeholder="Nombre"
-                value={rescuedNombre || ""}
+                value={RNombre}
                 onChange={(ev) => setNombre(ev.target.value)}
-                disabled={true}
               />
             </div>
             <div className="w-full md:w-3/5">
@@ -92,10 +61,9 @@ console.log(Horas)
                 className="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="email"
                 placeholder="Correo"
-                value={rescuedCorreo || ""}
+                value={RCorreo}
                 onChange={(ev) => setCorreo(ev.target.value)}
-                //pattern="^[a-zA-Z0-9._%+-]+@(alu.ucm\.cl|ucm\.cl)$"
-                disabled={true}
+                pattern="^[a-zA-Z0-9._%+-]+@(alu.ucm\.cl|ucm\.cl)$"
               />
             </div>
           </div>
@@ -107,13 +75,10 @@ console.log(Horas)
               label="Seleccione"
               name="eleccion"
               value={Eleccion}
-              onChange={(e) => {
-                setEleccion(e.target.value); // Rescata la ID de la cancha seleccionada
-                fetchHoras(e.target.value); // Solicita las horas disponibles para la cancha seleccionada
-              }}
+              onChange={(e) => setEleccion(e.target.value)}
             >
               {Cancha.length > 0 && Cancha.map((item) => (
-                <option key={item.id} value={item.id}> 
+                <option key={item.id} value={item.id}>
                   {item.nombre_espacio}
                 </option>
               ))}
@@ -153,11 +118,7 @@ console.log(Horas)
               type="date"
               value={selectedDate}
               name="date"
-              onChange={(e) => {
-                const selectedValue = e.target.value;
-                const formattedValue = moment(selectedValue).format('YYYY-MM-DD');
-                setSelectedDate(formattedValue);
-              }}
+              onChange={(e) => setSelectedDate(e.target.value)}
               min={new Date().toISOString().split("T")[0]}
             />
           </div>
@@ -169,11 +130,15 @@ console.log(Horas)
                 name="horainicio"
                 onChange={(e) => setHoraInicio(e.target.value)}
               >
-             {Horas.length > 0 && Horas.map((item) => (
-              <option key={item.cod_espacio} value={item.cod_espacio}>
-              {item.horario_string}
-              </option>
-              ))}
+                <option value="">Hora de inicio</option>
+                {Array.from({ length: 15 }, (_, i) => {
+                  const hora = `${i + 8}:00`;
+                  return (
+                    <option key={i} value={hora}>
+                      {hora}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>
