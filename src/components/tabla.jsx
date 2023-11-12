@@ -2,6 +2,8 @@ import React, {useEffect, useState } from "react";
 import campus1 from '../assets/campus.png'
 import { jwtDecode } from "jwt-decode";
 import moment from "moment/moment";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 //import AuthContext from "./context/authContext";
 
@@ -153,11 +155,7 @@ console.log(Horas)
               type="date"
               value={selectedDate}
               name="date"
-              onChange={(e) => {
-                const selectedValue = e.target.value;
-                const formattedValue = moment(selectedValue).format('YYYY-MM-DD');
-                setSelectedDate(formattedValue);
-              }}
+              onChange={(date) => setSelectedDate(date)};
               min={new Date().toISOString().split("T")[0]}
             />
           </div>
